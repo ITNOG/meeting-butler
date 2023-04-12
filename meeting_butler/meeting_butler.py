@@ -1,3 +1,7 @@
+"""
+Methods implementing the application logic
+"""
+
 import logging
 import os
 from typing import Optional

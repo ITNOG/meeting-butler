@@ -1,3 +1,7 @@
+"""
+List of methods to interact with Eventbrite APIs
+"""
+
 import logging
 from urllib.parse import urlencode
 
@@ -34,8 +38,7 @@ def get_registered_users(event: str, token: str) -> list[User]:
         LOGGER.debug("Fetching data for eventbrite. Event: %s, Page: %d", event, page)
         request = requests.get(request_url, timeout=30)
 
-        status = request.status_code
-        assert status == 200, f"Erroneous HTTP status code: {status}"
+        assert request.status_code == 200, f"Erroneous HTTP status code: {request.status_code}"
 
         try:
             body = request.json()

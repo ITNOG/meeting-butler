@@ -1,3 +1,7 @@
+"""
+Main entrypoint for the package.
+"""
+
 import logging
 from time import sleep
 

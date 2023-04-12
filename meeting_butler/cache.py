@@ -1,3 +1,7 @@
+"""
+Local persistent caches
+"""
+
 import datetime
 import json
 import logging
@@ -10,20 +14,20 @@ LOGGER = logging.getLogger(__name__)
 
 
 class Cache:
+    """
+    SQLite backed dict like object. Connects to the databse specified at filename.
+
+     Arguments:
+    ---------
+    filename: Optional[os.PathLike]
+        Filename. If False, a file named meeting_butle.db is created in the temp directory
+        Default: False
+    reset: Optional[bool]
+        If true, deletes the database before starting. Default: False
+    """
     def __init__(
         self, filename: Optional[os.PathLike] = False, reset: Optional[bool] = False
     ) -> None:
-        """
-        SQLite backed dict like object. Connects to the databse specified at filename.
-
-        Arguments:
-        ---------
-        filename: Optional[os.PathLike]
-            Filename. If False, a file named meeting_butle.db is created in the temp directory
-            Default: False
-        reset: Optional[bool]
-            If true, deletes the database before starting. Default: False
-        """
         self.filename = filename or os.path.join(gettempdir(), "meeting_butler.db")
 
         if reset:

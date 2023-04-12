@@ -1,3 +1,7 @@
+"""
+Methods to interact with NIX.CZ's meetingtool
+"""
+
 import json
 import logging
 
@@ -9,6 +13,18 @@ LOGGER = logging.getLogger(__name__)
 
 
 def register_users(hostname: str, token: str, users: list[User]) -> None:
+    """
+    Register users on meetingtool
+
+    Arguments:
+    ----------
+    hostname: str
+        Instance hostname
+    token: str
+        API auth token
+    users: list[Users]
+        List of users that shall be registered
+    """
     url = f"https://{hostname}/api/registrations/import/"
     headers = {"Authorization": f"Bearer {token}"}
 

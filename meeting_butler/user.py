@@ -1,3 +1,7 @@
+"""
+Defines user object
+"""
+
 from typing import Optional, TypedDict
 
 
