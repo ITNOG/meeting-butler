@@ -25,6 +25,7 @@ class Cache:
     reset: Optional[bool]
         If true, deletes the database before starting. Default: False
     """
+
     def __init__(
         self, filename: Optional[os.PathLike] = False, reset: Optional[bool] = False
     ) -> None:
