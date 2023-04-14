@@ -15,3 +15,4 @@ class User(TypedDict):
     title: str
     # There might be users without an ASN
     asn: Optional[int]
+    country: str

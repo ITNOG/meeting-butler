@@ -50,7 +50,6 @@ def sync(
     with Cache(cache_filename) as cache:
         for user in eventbrite_users:
             if user["email"] not in cache:
-                print(f"{user} is not in cache")
                 new_users.append(user)
 
         LOGGER.info("Found %d new users", len(new_users))

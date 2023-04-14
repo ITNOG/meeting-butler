@@ -58,6 +58,8 @@ def get_registered_users(event: str, token: str) -> list[User]:
                     "company": attendee["profile"]["company"].upper(),
                     "email": attendee["profile"]["email"].upper(),
                     "title": attendee["profile"]["job_title"].upper(),
+                    # Country is not stored anywhere within eventbrite
+                    "country": "IT",
                 }
 
                 asn = next(
