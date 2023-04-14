@@ -28,4 +28,5 @@ class Settings(BaseSettings):
         """
         Settings for pydantic
         """
+
         env_prefix = "meeting_butler_"
