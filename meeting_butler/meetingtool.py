@@ -37,10 +37,11 @@ def register_users(hostname: str, token: str, users: list[User]) -> None:
                 "firstName": user["name"],
                 "lastName": user["surname"],
                 "company": user["company"],
-                "mail": user["email"],
+                # Email address has to be lowercase
+                "mail": user["email"].lower(),
                 "jobTitle": user["title"],
                 "asn": user["asn"],
-                "countryCode": user["country"],
+                "countryCode": user["country"]
             }
             for user in users[start:stop]
         ]
