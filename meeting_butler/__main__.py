@@ -2,6 +2,7 @@
 Main entrypoint for the package.
 """
 
+import argparse
 import logging
 from time import sleep
 
@@ -25,6 +26,13 @@ def __main__() -> None:
     else:
         logger.setLevel(logging.INFO)
 
+    parser = argparse.ArgumentParser(
+        prog="meeting_butler",
+        description="Takes care of background tasks pertained to meeting and registrations",
+    )
+    parser.add_argument("email_regex", metavar="REGEX", type=str, help="Only process attendees whos email address matches with this regex", default=False)
+    args = parser.parse_args()
+
     while True:
         sync(
             settings.eventbrite_event,
@@ -32,6 +40,7 @@ def __main__() -> None:
             settings.meetingtool_hostname,
             settings.meetingtool_token,
             settings.cache_filename,
+            args.email_regex,
         )
 
         sleep(settings.sync_every)
