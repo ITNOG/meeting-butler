@@ -65,9 +65,9 @@ def sync(
         LOGGER.info("Found %d new users", len(new_users))
         LOGGER.debug("New users: %s", new_users)
 
-        #meetingtool.register_users(meetingtool_hostname, meetingtool_token, new_users)
-        #for new_user in new_users:
-        #    cache[new_user["email"]] = new_user
+        meetingtool.register_users(meetingtool_hostname, meetingtool_token, new_users)
+        for new_user in new_users:
+            cache[new_user["email"]] = new_user
 
     LOGGER.info("Sync completed")
 
