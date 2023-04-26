@@ -31,8 +31,7 @@ def register_users(hostname: str, token: str, users: list[User]) -> None:
 
     LOGGER.info("Importing: %d users", len(users))
 
-    for start in range(0, len(users), 15):
-        stop = start + 15
+    for user in users:
         data = [
             {
                 "firstName": user["name"],
@@ -45,14 +44,14 @@ def register_users(hostname: str, token: str, users: list[User]) -> None:
                 "countryCode": user["country"],
                 "companyCountryCode": user["country"],
             }
-            for user in users[start:stop]
         ]
 
         LOGGER.debug("Importing the following users: %s", data)
-        request = requests.post(url, data=json.dumps(data), headers=headers, timeout=30)
+        response = requests.post(url, data=json.dumps(data), headers=headers, timeout=30)
 
-        status = request.status_code
+        status = response.status_code
         if status != 200:
-            raise RuntimeError(f"Unable to save users: {request.content}")
+            error = response.json()["name"]
+            raise RuntimeError(f"Unable to save user: Status: {status}. Error: {error}")
 
         sleep(0.1)

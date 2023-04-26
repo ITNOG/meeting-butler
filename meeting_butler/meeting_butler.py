@@ -57,7 +57,7 @@ def sync(
 
     with Cache(cache_filename) as cache:
         for user in eventbrite_users:
-            if email_regex and not re.search(email_regex, user['email'], re.IGNORECASE):
+            if email_regex and not re.search(email_regex, user["email"], re.IGNORECASE):
                 continue
             if user["email"] not in cache:
                 new_users.append(user)
