@@ -4,6 +4,7 @@ Methods to interact with NIX.CZ's meetingtool
 
 import json
 import logging
+from time import sleep
 
 import requests
 
@@ -52,4 +53,6 @@ def register_users(hostname: str, token: str, users: list[User]) -> None:
 
         status = request.status_code
         if status != 200:
-            raise RuntimeError(f"Unable to save users: {status.content}")
+            raise RuntimeError(f"Unable to save users: {request.content}")
+
+        sleep(0.1)

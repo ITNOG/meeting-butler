@@ -30,7 +30,7 @@ def __main__() -> None:
         prog="meeting_butler",
         description="Takes care of background tasks pertained to meeting and registrations",
     )
-    parser.add_argument("email_regex", metavar="REGEX", type=str, help="Only process attendees whos email address matches with this regex", default=False)
+    parser.add_argument("email_regex", metavar="REGEX", nargs='?', type=str, help="Only process attendees whos email address matches with this regex", default=False)
     args = parser.parse_args()
 
     while True:
