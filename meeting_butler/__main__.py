@@ -22,7 +22,7 @@ def main() -> None:
         settings = Settings()
     except ValidationError as error:
         sys.exit(error)
-    print(settings.dict())
+
     logging.basicConfig()
     logger = logging.getLogger("meeting_butler")
 
