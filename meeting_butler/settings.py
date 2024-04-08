@@ -5,9 +5,9 @@ Methods to read user related settings
 # pylint: disable=too-few-public-methods, no-name-in-module
 
 import pathlib
-from typing import Optional
+from typing import Literal, Optional
 
-from pydantic import BaseSettings, conint
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
@@ -15,18 +15,19 @@ class Settings(BaseSettings):
     Defines application wide settings inherited from ENV.
     """
 
-    sync_every: Optional[conint(gt=0, le=86400)] = 3600
-    debug: Optional[bool] = False
+    sync_every: Optional[str] = 3600
+    debug: Optional[bool] = True
 
-    eventbrite_event: str
-    eventbrite_token: str
     meetingtool_hostname: str
     meetingtool_token: str
     cache_filename: pathlib.Path
+    data_source: Optional[Literal["eventbrite", "formbuilder"]] = "formbuilder"
+    eventbrite_event: Optional[str] = ""
+    eventbrite_token: Optional[str] = ""
+    formbuilder_url: Optional[str] = ""
 
-    class Config:
-        """
-        Settings for pydantic
-        """
-
-        env_prefix = "meeting_butler_"
+    model_config = SettingsConfigDict(
+        env_prefix="meeting-butler_",
+        env_file="meeting-butler.conf",
+        env_file_encoding="utf-8",
+    )

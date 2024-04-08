@@ -4,19 +4,25 @@ Main entrypoint for the package.
 
 import argparse
 import logging
+import sys
 from time import sleep
+
+from pydantic import ValidationError
 
 from meeting_butler.meeting_butler import sync
 from meeting_butler.settings import Settings
 
 
-def __main__() -> None:
+def main() -> None:
     """
     Main application entrypoint.
     Stats an infiite loop executing sync() every `sync_every` seconds
     """
-    settings = Settings()
-
+    try:
+        settings = Settings()
+    except ValidationError as error:
+        sys.exit(error)
+    print(settings.dict())
     logging.basicConfig()
     logger = logging.getLogger("meeting_butler")
 
@@ -40,18 +46,24 @@ def __main__() -> None:
     )
     args = parser.parse_args()
 
+    source_settings = {}
+    if settings.data_source == "eventbrite":
+        source_settings = {"token": settings.eventbrite_token, "event": settings.eventbrite_event}
+    elif settings.data_source == "formbuilder":
+        source_settings = {"url": settings.formbuilder_url}
+
     while True:
         sync(
-            settings.eventbrite_event,
-            settings.eventbrite_token,
             settings.meetingtool_hostname,
             settings.meetingtool_token,
+            source_settings,
+            settings.data_source,
             settings.cache_filename,
             args.email_regex,
         )
 
-        sleep(settings.sync_every)
+        sleep(int(settings.sync_every))
 
 
 if __name__ == "__main__":
-    __main__()
+    main()

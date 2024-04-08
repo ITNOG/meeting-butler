@@ -7,7 +7,7 @@ import os
 import re
 from typing import Optional
 
-from meeting_butler import eventbrite, meetingtool
+from meeting_butler import eventbrite, formbuilder, meetingtool
 from meeting_butler.cache import Cache
 from meeting_butler.user import User
 
@@ -15,10 +15,10 @@ LOGGER = logging.getLogger(__name__)
 
 
 def sync(
-    eventbrite_event: str,
-    eventbrite_token: str,
     meetingtool_hostname: str,
     meetingtool_token: str,
+    source_settings: Optional[dict],
+    data_source: str = "formbuilder",
     cache_filename: Optional[os.PathLike] = False,
     email_regex: str = False,
 ) -> list[User]:
@@ -27,16 +27,14 @@ def sync(
 
     Arguments:
     ----------
-    eventbrite_event: str
-        Eventbrite event ID
-    eventbrite_toekn: str
-        Eventbrite API token
     meetingtool_hostname: str
         Meetingtool instance hostname
     meetingtool_token: str
         Meetingtool API token
-    eventbrite_token: str
-        Meetingtool instance API token
+    source_settings: dict
+        Dictionary with source specific settings
+    data_source: str
+        Either 'formbuilder' or 'meetingtool'.
     cache_filename: Optional[os.PathLike]
         File name and path to the local cache. False means cache.db
         Default: False
@@ -53,10 +51,17 @@ def sync(
     new_users = []
 
     cache = Cache(cache_filename)
-    eventbrite_users = eventbrite.get_registered_users(eventbrite_event, eventbrite_token)
+    if data_source == "eventbrite":
+        source_users = eventbrite.get_registered_users(
+            source_settings["event"], source_settings["token"]
+        )
+    elif data_source == "formbuilder":
+        source_users = formbuilder.get_registered_users(source_settings["url"])
+    else:
+        raise RuntimeError(f"Unsupported data source: {data_source}")
 
     with Cache(cache_filename) as cache:
-        for user in eventbrite_users:
+        for user in source_users:
             if email_regex and not re.search(email_regex, user["email"], re.IGNORECASE):
                 continue
             if user["email"] not in cache:
