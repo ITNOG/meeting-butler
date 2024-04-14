@@ -1,0 +1,7 @@
+meeting-butler_debug=False
+meeting-butler_formbuilder_url="https://drive.google.com/users.csv"
+meeting-butler_meetingtool_hostname=meetingtool.itnog.it
+meeting-butler_meetingtool_token="secret token"
+meeting-butler_cache_filename=./cache.db
+meeting-butler_sync_every=86400
+meeting-butler_data_source = "formbuilder"
