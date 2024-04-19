@@ -70,3 +70,4 @@ config
 
 # Messier specific
 *.db
+*.conf
