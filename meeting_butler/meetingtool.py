@@ -51,7 +51,7 @@ def register_users(hostname: str, token: str, users: list[User]) -> None:
 
         status = response.status_code
         if status != 200:
-            error = response.json()["name"]
+            error = response.json()
             raise RuntimeError(f"Unable to save user: Status: {status}. Error: {error}")
 
         sleep(0.1)
