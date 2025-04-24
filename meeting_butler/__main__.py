@@ -51,6 +51,8 @@ def main() -> None:
         source_settings = {"token": settings.eventbrite_token, "event": settings.eventbrite_event}
     elif settings.data_source == "formbuilder":
         source_settings = {"url": settings.formbuilder_url}
+    elif settings.data_source == "pretino":
+        source_settings = {"url": settings.pretino_url, "token": settings.pretino_token}
 
     while True:
         sync(

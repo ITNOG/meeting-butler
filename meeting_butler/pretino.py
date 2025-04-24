@@ -1,8 +1,7 @@
 """
-List of methods to interact with Formbuilder APIs
+List of methods to interact with the Pretino API
 """
 
-import csv
 import logging
 
 import requests
@@ -13,7 +12,7 @@ from meeting_butler.user import User
 LOGGER = logging.getLogger(__name__)
 
 
-def get_registered_users(url: str) -> list[User]:
+def get_registered_users(url: str, api_key: str) -> list[User]:
     """
     Retrieve a deuplicated list of registered users on Eventbrite.
 
@@ -27,33 +26,33 @@ def get_registered_users(url: str) -> list[User]:
     list[User]: Registered user
     """
     users = []
-    LOGGER.debug("Fetching data for 123FormBuilder. URL: %s", url)
-    request = requests.get(url, timeout=30)
+    LOGGER.debug("Fetching data for Pretino. URL: %s", url)
+    request = requests.get(url, timeout=30, headers={"x-pretino-key": api_key})
 
     assert request.status_code == 200, f"Erroneous HTTP status code: {request.status_code}"
 
     try:
-        content = request.content.decode("utf-8")
-        attendees = csv.reader(content.splitlines(), delimiter=",")
+        attendees = request.json()
+        print(attendees)
     except (KeyError, JSONDecodeError) as error:
         raise ValueError(f"Malformed body: f{request.text}") from error
 
     for attendee in attendees:
         try:
             user = {
-                "name": attendee[2].upper(),
-                "surname": attendee[3].upper(),
-                "company": attendee[4].upper(),
-                "title": attendee[5].upper(),
-                "email": attendee[6].upper(),
+                "name": attendee["name"].upper(),
+                "surname": "",
+                "company": attendee["company"].upper(),
+                "title": attendee["job_title"].upper(),
+                "email": attendee["email"].upper(),
                 "country": "IT",
             }
 
             if not user["company"]:
                 # Empty company name
-                user["company"] = f"{user['name']} {user['surname']}"
+                user["company"] = {user["name"]}
 
-            asn = attendee[9]
+            asn = attendee["asn"]
             # Remove first "AS"
             if asn.upper().startswith("AS"):
                 asn = asn[2:]

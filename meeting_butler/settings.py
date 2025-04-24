@@ -21,10 +21,12 @@ class Settings(BaseSettings):
     meetingtool_hostname: str
     meetingtool_token: str
     cache_filename: pathlib.Path
-    data_source: Optional[Literal["eventbrite", "formbuilder"]] = "formbuilder"
+    data_source: Optional[Literal["eventbrite", "formbuilder", "pretino"]] = "pretino"
     eventbrite_event: Optional[str] = ""
     eventbrite_token: Optional[str] = ""
     formbuilder_url: Optional[str] = ""
+    pretino_url: Optional[str] = ""
+    pretino_token: Optional[str] = ""
 
     model_config = SettingsConfigDict(
         env_prefix="meeting-butler_",

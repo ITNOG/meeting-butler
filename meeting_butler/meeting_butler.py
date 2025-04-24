@@ -7,7 +7,7 @@ import os
 import re
 from typing import Optional
 
-from meeting_butler import eventbrite, formbuilder, meetingtool
+from meeting_butler import eventbrite, formbuilder, meetingtool, pretino
 from meeting_butler.cache import Cache
 from meeting_butler.user import User
 
@@ -18,7 +18,7 @@ def sync(
     meetingtool_hostname: str,
     meetingtool_token: str,
     source_settings: Optional[dict],
-    data_source: str = "formbuilder",
+    data_source: str = "pretino",
     cache_filename: Optional[os.PathLike] = False,
     email_regex: str = False,
 ) -> list[User]:
@@ -57,6 +57,10 @@ def sync(
         )
     elif data_source == "formbuilder":
         source_users = formbuilder.get_registered_users(source_settings["url"])
+    elif data_source == "pretino":
+        source_users = pretino.get_registered_users(
+            source_settings["url"], source_settings["token"]
+        )
     else:
         raise RuntimeError(f"Unsupported data source: {data_source}")
 
