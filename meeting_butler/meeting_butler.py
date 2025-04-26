@@ -50,7 +50,6 @@ def sync(
 
     new_users = []
 
-    cache = Cache(cache_filename)
     if data_source == "eventbrite":
         source_users = eventbrite.get_registered_users(
             source_settings["event"], source_settings["token"]

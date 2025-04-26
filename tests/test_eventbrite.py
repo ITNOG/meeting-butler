@@ -7,7 +7,7 @@ from meeting_butler.eventbrite import get_registered_users
 
 RESPONSE = {
     "method": responses.GET,
-    "url": ("https://www.eventbriteapi.com/v3/events/" "EVENT/attendees/?token=TOKEN&page=1"),
+    "url": ("https://www.eventbriteapi.com/v3/events/EVENT/attendees/?token=TOKEN&page=1"),
     "body": """
         {
             "pagination": {
