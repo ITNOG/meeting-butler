@@ -5,6 +5,7 @@ List of methods to interact with the Pretino API
 import logging
 
 import requests
+from pydantic import TypeAdapter
 from requests.exceptions import JSONDecodeError
 
 from meeting_butler.user import User
@@ -33,7 +34,9 @@ def get_registered_users(url: str, api_key: str) -> list[User]:
 
     try:
         attendees = request.json()
-        print(attendees)
+        # Check that response is a list of dictionaries
+        validator = TypeAdapter(list[dict])
+        validator.validate_python(request.json())
     except (KeyError, JSONDecodeError) as error:
         raise ValueError(f"Malformed body: f{request.text}") from error
 

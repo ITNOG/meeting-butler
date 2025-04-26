@@ -100,7 +100,7 @@ class TestCase(unittest.TestCase):
                     "email": "MARCO@ITNOG.IT",
                     "title": "KODAMAS TAMER",
                     "asn": 64496,
-                    "country": "IT"
+                    "country": "IT",
                 }
             ],
         )
