@@ -11,7 +11,8 @@ RESPONSE = {
     "body": """
         [
             {
-                "name": "PC Principal",
+                "name": "PC",
+                "surname": "Principal",
                 "company": "South Park Elementary School",
                 "asn": "AS0",
                 "job_title": "School Principal",
@@ -22,7 +23,8 @@ RESPONSE = {
                 "qrcode": "54321"
             },
             {
-                "name": "Strong Woman",
+                "name": "Strong",
+                "surname": "Woman",
                 "company": "South Park Elementary School",
                 "asn": "AS65535",
                 "job_title": "Teacher",
@@ -85,8 +87,8 @@ class TestCase(unittest.TestCase):
             list(registered_users),
             [
                 {
-                    "name": "PC PRINCIPAL",
-                    "surname": "",
+                    "name": "PC",
+                    "surname": "PRINCIPAL",
                     "company": "SOUTH PARK ELEMENTARY SCHOOL",
                     "email": "PCPRINCIPAL@EXAMPLE.COM",
                     "title": "SCHOOL PRINCIPAL",
@@ -94,8 +96,8 @@ class TestCase(unittest.TestCase):
                     "country": "IT",
                 },
                 {
-                    "name": "STRONG WOMAN",
-                    "surname": "",
+                    "name": "STRONG",
+                    "surname": "WOMAN",
                     "company": "SOUTH PARK ELEMENTARY SCHOOL",
                     "email": "STRONGWOMAN@EXAMPLE.COM",
                     "title": "TEACHER",

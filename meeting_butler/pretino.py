@@ -44,7 +44,7 @@ def get_registered_users(url: str, api_key: str) -> list[User]:
         try:
             user = {
                 "name": attendee["name"].upper(),
-                "surname": "",
+                "surname": attendee["surname"].upper(),
                 "company": attendee["company"].upper(),
                 "title": attendee["job_title"].upper(),
                 "email": attendee["email"].upper(),
