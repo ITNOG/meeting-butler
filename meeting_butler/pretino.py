@@ -53,7 +53,7 @@ def get_registered_users(url: str, api_key: str) -> list[User]:
 
             if not user["company"]:
                 # Empty company name
-                user["company"] = {user["name"]}
+                user["company"] = f'{user["name"]} {user["surname"]}'
 
             asn = attendee["asn"]
             # Remove first "AS"
